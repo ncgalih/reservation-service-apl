@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  reservation-service:
+    build: .
+    ports:
+      - "6000:6000"
+    environment:
+      - MONGO_URI=mongodb://reservation-db:27017/reservationdb
+    depends_on:
+      - reservation-db
+
+  reservation-db:
+    image: mongo
+    container_name: reservation-db
+    ports:
+      - "27018:27017"
+    volumes:
+      - reservation-db-data:/data/db
+
+volumes:
+  reservation-db-data:
